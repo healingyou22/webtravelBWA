@@ -32,7 +32,7 @@
 
     <!-- Nav Item - Transaksi -->
     <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{ route('admin.transaction.index') }}">
             <i class="fas fa-fw fa-dollar-sign"></i>
             <span>Transaksi</span></a>
     </li>
