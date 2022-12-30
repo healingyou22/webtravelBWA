@@ -14,19 +14,19 @@
                     <a href="{{ route('home') }}" class="nav-link active">Home</a>
                 </li>
                 <li class="nav-item mx-md-2">
-                    <a href="#" class="nav-link">Paket Travel</a>
+                    <a href="#popularContent" class="nav-link">Paket Travel</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navbardrop"
                         data-toggle="dropdown">Services</a>
                     <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item">Link</a>
-                        <a href="#" class="dropdown-item">Link</a>
-                        <a href="#" class="dropdown-item">Link</a>
+                        <a href="#" class="dropdown-item">Coming Soon</a>
+                        <a href="#" class="dropdown-item">Coming Soon</a>
+                        <a href="#" class="dropdown-item">Coming Soon</a>
                     </div>
                 </li>
                 <li class="nav-item mx-md-2">
-                    <a href="#" class="nav-link">Testimonial</a>
+                    <a href="#testimonialContent" class="nav-link">Testimonial</a>
                 </li>
             </ul>
 
