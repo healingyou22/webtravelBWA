@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Midtrans\Config;
+use Midtrans\Snap;
 
 class CheckoutController extends Controller
 {
@@ -98,8 +100,32 @@ class CheckoutController extends Controller
 
         $transaction->save();
 
-        Mail::to($transaction->user)->send(new TransactionSuccess($transaction));
+        Config::$serverKey = config('midtrans.serverKey');
+        Config::$isProduction = config('midtrans.isProduction');
+        Config::$isSanitized = config('midtrans.isSanitized');
+        Config::$is3ds = config('midtrans.is3ds');
 
-        return view('pages.success');
+        $midtrans_params = [
+            'transaction_details' => [
+                'order_id' => 'MIDTRANS-' . $transaction->id,
+                'gross_amount' => (int) $transaction->transaction_total,
+            ],
+            'customer_details' => [
+                'first_name' => $transaction->user->name,
+                'email' => $transaction->user->email,
+            ],
+            'enabled_payments' => ['gopay'],
+            'vtweb' => []
+        ];
+
+        try {
+            $paymentUrl = Snap::createTransaction($midtrans_params)->redirect_url;
+
+
+            // header('Location:' . $paymentUrl);
+            return redirect()->to($paymentUrl);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 }

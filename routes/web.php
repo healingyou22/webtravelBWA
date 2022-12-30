@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\TravelPackageController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MidtransController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,3 +37,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
 });
 
 Auth::routes(['verify' => true]);
+
+Route::post('/midtrans/callback', [MidtransController::class, 'notificationHandler'])->name('notification-handler');
+Route::get('/midtrans/finish', [MidtransController::class, 'finishRedirect'])->name('finish-redirect');
+Route::get('/midtrans/unfinish', [MidtransController::class, 'unfinishRedirect'])->name('unfinish-redirect');
+Route::get('/midtrans/error', [MidtransController::class, 'errorRedirect'])->name('error-redirect');
