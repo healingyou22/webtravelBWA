@@ -21,9 +21,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/detail', [DetailController::class, 'index'])->name('detail');
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
-Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('success');
+Route::get('/detail/{slug}', [DetailController::class, 'index'])->name('detail');
+Route::post('/checkout/{id}', [CheckoutController::class, 'process'])->middleware(['auth', 'verified'])->name('checkout-process');
+Route::get('/checkout/{id}', [CheckoutController::class, 'index'])->middleware(['auth', 'verified'])->name('checkout');
+Route::post('/checkout/create/{id}', [CheckoutController::class, 'create'])->middleware(['auth', 'verified'])->name('checkout-create');
+Route::get('/checkout/remove/{detail_id}', [CheckoutController::class, 'remove'])->middleware(['auth', 'verified'])->name('checkout-remove');
+Route::get('/checkout/confirm/{id}', [CheckoutController::class, 'success'])->middleware(['auth', 'verified'])->name('checkout-success');
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
